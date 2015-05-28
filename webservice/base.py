@@ -13,7 +13,6 @@ from tornado import escape
 from tornado.options import options
 from tornado.web import RequestHandler as BaseRequestHandler, HTTPError
 from webservice import exceptions
-from webservice.tasks import email_tasks
 
 
 class BaseHandler(BaseRequestHandler):
@@ -101,12 +100,13 @@ class APIHandler(BaseHandler):
     def _send_error_email(self, exception):
         try:
             # send email
-            subject = "[%s]Internal Server Error" % options.sitename
-            body = self.render_string("errors/500_email.html",
-                                      exception=exception)
-            if options.send_error_email:
-                email_tasks.send_email_task.delay(options.email_from,
-                                                  options.admins, subject, body)
+            #subject = "[%s]Internal Server Error" % options.sitename
+            #body = self.render_string("errors/500_email.html",
+            #                          exception=exception)
+            #if options.send_error_email:
+            #   email_tasks.send_email_task.delay(options.email_from,
+            #                                      options.admins, subject, body)
+            pass
         except Exception:
             logging.error(traceback.format_exc())
 
